@@ -1,4 +1,6 @@
 <script setup>
+import { withBase } from "vitepress";
+
 const groups = [
   {
     title: "Privacy & data protection",
@@ -124,7 +126,7 @@ const groups = [
               </svg>
               <img
                 v-else
-                :src="`/assets/flags/${item.flag}.svg`"
+                :src="withBase(`/assets/flags/${item.flag}.svg`)"
                 :alt="`${item.region} flag`"
                 width="28"
                 height="28"

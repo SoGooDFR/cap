@@ -146,7 +146,8 @@ export default withMermaid({
     return head;
   },
   head: [
-    ["link", { rel: "icon", href: "/logo.png" }],
+    // Keep in sync with `base` above (head links are not base-prefixed).
+    ["link", { rel: "icon", href: "/cap/logo.png" }],
     ["link", { rel: "preconnect", href: "https://cdn.jsdelivr.net" }],
     ["link", { rel: "preconnect", href: "https://a.tiago.zip" }],
     ["link", { rel: "preconnect", href: "https://fullres-script-proxy.tiag.workers.dev" }],

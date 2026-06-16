@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, onBeforeUnmount, ref } from "vue";
+import { withBase } from "vitepress";
 import VPNavBarSearch from "vitepress/dist/client/theme-default/components/VPNavBarSearch.vue";
 
 const fromWidget = ref(false);
@@ -528,14 +529,14 @@ onBeforeUnmount(() => {
       <div class="wrap wrap-hero">
         <div class="inner">
           <div class="left">
-            <a class="brand" href="/" aria-label="Cap home">
-              <img alt="" src="/logo.png" width="20" height="20" />
+            <a class="brand" :href="withBase('/')" aria-label="Cap home">
+              <img alt="" :src="withBase('/logo.png')" width="20" height="20" />
               <strong>Cap</strong>
             </a>
             <VPNavBarSearch class="homev2-search" />
           </div>
           <nav>
-            <a href="/guide/" data-cta="docs" data-cta-location="nav">Docs</a>
+            <a :href="withBase('/guide/')" data-cta="docs" data-cta-location="nav">Docs</a>
             <a href="#features" data-cta="features" data-cta-location="nav"
               >Features</a
             >
@@ -580,14 +581,14 @@ onBeforeUnmount(() => {
           <div class="actions">
             <a
               class="btn primary"
-              href="/guide/"
+              :href="withBase('/guide/')"
               data-cta="docs"
               data-cta-location="hero"
               >Get started in 5 minutes <span class="arr">→</span></a
             >
             <a
               class="btn"
-              href="/guide/demo.html"
+              :href="withBase('/guide/demo.html')"
               data-cta="demo"
               data-cta-location="hero"
               >Try the demo <span class="arr">↗</span></a
@@ -597,7 +598,7 @@ onBeforeUnmount(() => {
 
         <div class="hero-image" aria-hidden="true">
           <div class="image-bg"></div>
-          <img class="image-src" src="/logo.png" alt="" />
+          <img class="image-src" :src="withBase('/logo.png')" alt="" />
         </div>
       </div>
 
@@ -606,7 +607,7 @@ onBeforeUnmount(() => {
           <div class="dash-wrap">
             <div class="dash-frame">
               <img
-                src="/assets/screenshot.webp"
+                :src="withBase('/assets/screenshot.webp')"
                 alt="Cap admin dashboard screenshot"
                 width="2892"
                 height="1556"
@@ -625,7 +626,7 @@ onBeforeUnmount(() => {
             <span class="logoimg-row">
               <img
                 class="li li-bunny"
-                src="/logos/bunny.svg"
+                :src="withBase('/logos/bunny.svg')"
                 alt="bunny.net"
                 width="112"
                 height="43"
@@ -633,7 +634,7 @@ onBeforeUnmount(() => {
               />
               <img
                 class="li li-adguard"
-                src="/logos/adguard.svg"
+                :src="withBase('/logos/adguard.svg')"
                 alt="AdGuard"
                 width="120"
                 height="60"
@@ -641,7 +642,7 @@ onBeforeUnmount(() => {
               />
               <img
                 class="li li-fraunhofer"
-                src="/logos/fraunhofer.svg"
+                :src="withBase('/logos/fraunhofer.svg')"
                 alt="Fraunhofer"
                 width="258"
                 height="72"
@@ -820,7 +821,7 @@ onBeforeUnmount(() => {
 
             <a
               class="cmpl-link"
-              href="/guide/compliance.html"
+              :href="withBase('/guide/compliance.html')"
               data-cta="compliance"
               data-cta-location="home_compliance"
               >See how Cap complies <span class="arr">↗</span></a
@@ -833,7 +834,7 @@ onBeforeUnmount(() => {
               <div class="cmpl-chips">
                 <span class="cmpl-chip"
                   ><img
-                    src="/assets/flags/eu.svg"
+                    :src="withBase('/assets/flags/eu.svg')"
                     alt=""
                     width="18"
                     height="18"
@@ -842,7 +843,7 @@ onBeforeUnmount(() => {
                 >
                 <span class="cmpl-chip"
                   ><img
-                    src="/assets/flags/us.svg"
+                    :src="withBase('/assets/flags/us.svg')"
                     alt=""
                     width="18"
                     height="18"
@@ -851,7 +852,7 @@ onBeforeUnmount(() => {
                 >
                 <span class="cmpl-chip"
                   ><img
-                    src="/assets/flags/us.svg"
+                    :src="withBase('/assets/flags/us.svg')"
                     alt=""
                     width="18"
                     height="18"
@@ -860,7 +861,7 @@ onBeforeUnmount(() => {
                 >
                 <span class="cmpl-chip"
                   ><img
-                    src="/assets/flags/ca.svg"
+                    :src="withBase('/assets/flags/ca.svg')"
                     alt=""
                     width="18"
                     height="18"
@@ -869,7 +870,7 @@ onBeforeUnmount(() => {
                 >
                 <span class="cmpl-chip"
                   ><img
-                    src="/assets/flags/br.svg"
+                    :src="withBase('/assets/flags/br.svg')"
                     alt=""
                     width="18"
                     height="18"
@@ -878,7 +879,7 @@ onBeforeUnmount(() => {
                 >
                 <span class="cmpl-chip"
                   ><img
-                    src="/assets/flags/in.svg"
+                    :src="withBase('/assets/flags/in.svg')"
                     alt=""
                     width="18"
                     height="18"
@@ -887,7 +888,7 @@ onBeforeUnmount(() => {
                 >
                 <span class="cmpl-chip"
                   ><img
-                    src="/assets/flags/cn.svg"
+                    :src="withBase('/assets/flags/cn.svg')"
                     alt=""
                     width="18"
                     height="18"
@@ -896,7 +897,7 @@ onBeforeUnmount(() => {
                 >
                 <span class="cmpl-chip"
                   ><img
-                    src="/assets/flags/ru.svg"
+                    :src="withBase('/assets/flags/ru.svg')"
                     alt=""
                     width="18"
                     height="18"
@@ -933,7 +934,7 @@ onBeforeUnmount(() => {
                 >
                 <span class="cmpl-chip"
                   ><img
-                    src="/assets/flags/eu.svg"
+                    :src="withBase('/assets/flags/eu.svg')"
                     alt=""
                     width="18"
                     height="18"
@@ -942,7 +943,7 @@ onBeforeUnmount(() => {
                 >
                 <span class="cmpl-chip"
                   ><img
-                    src="/assets/flags/us.svg"
+                    :src="withBase('/assets/flags/us.svg')"
                     alt=""
                     width="18"
                     height="18"
@@ -1050,7 +1051,7 @@ onBeforeUnmount(() => {
           <figcaption class="quote-by">
             <img
               class="quote-logo"
-              src="/logos/adguard.svg"
+              :src="withBase('/logos/adguard.svg')"
               alt="AdGuard"
               width="120"
               height="60"
@@ -1073,7 +1074,7 @@ onBeforeUnmount(() => {
             </p>
             <a
               class="cmpl-link"
-              href="/guide/alternatives.html"
+              :href="withBase('/guide/alternatives.html')"
               data-cta="compare"
               data-cta-location="home_compare"
               >See the full comparison <span class="arr">↗</span></a
@@ -1315,7 +1316,7 @@ onBeforeUnmount(() => {
                 <dd>
                   An open-source CAPTCHA is bot protection whose code you can
                   read, audit, and
-                  <a href="/guide/standalone/">self-host</a>, rather than a
+                  <a :href="withBase('/guide/standalone/')">self-host</a>, rather than a
                   closed third-party service. Cap is licensed under Apache 2.0
                   and runs entirely on your own infrastructure, so visitor data
                   never reaches a vendor.
@@ -1327,9 +1328,9 @@ onBeforeUnmount(() => {
                   Cap is a privacy-first, self-hosted alternative to Google
                   reCAPTCHA that uses proof-of-work and instrumentation instead
                   of visual puzzles or tracking. Compare it against
-                  <a href="/guide/alternatives/recaptcha.html">reCAPTCHA</a>,
-                  <a href="/guide/alternatives/hcaptcha.html">hCaptcha</a>, and
-                  <a href="/guide/alternatives/turnstile.html">Turnstile</a> to
+                  <a :href="withBase('/guide/alternatives/recaptcha.html')">reCAPTCHA</a>,
+                  <a :href="withBase('/guide/alternatives/hcaptcha.html')">hCaptcha</a>, and
+                  <a :href="withBase('/guide/alternatives/turnstile.html')">Turnstile</a> to
                   find what fits your stack.
                 </dd>
               </div>
@@ -1349,14 +1350,14 @@ onBeforeUnmount(() => {
             <div class="actions">
               <a
                 class="btn primary"
-                href="/guide/"
+                :href="withBase('/guide/')"
                 data-cta="docs"
                 data-cta-location="cta_block"
                 >Get started in 5 minutes</a
               >
               <a
                 class="btn"
-                href="/guide/demo.html"
+                :href="withBase('/guide/demo.html')"
                 data-cta="demo"
                 data-cta-location="cta_block"
                 >Try the demo <span class="arr">↗</span></a
@@ -1382,8 +1383,8 @@ onBeforeUnmount(() => {
       <div class="wrap-wide ft-wrap">
         <div class="ft-top">
           <div class="ft-brand">
-            <a class="ft-logo" href="/" aria-label="Cap home">
-              <img alt="" src="/logo.png" width="26" height="26" />
+            <a class="ft-logo" :href="withBase('/')" aria-label="Cap home">
+              <img alt="" :src="withBase('/logo.png')" width="26" height="26" />
               <strong>Cap</strong>
             </a>
             <p class="ft-tagline">
@@ -1417,23 +1418,23 @@ onBeforeUnmount(() => {
           <div class="ft-cols">
             <nav class="ft-col" aria-label="Product">
               <span class="ft-col-title">Product</span>
-              <a href="/guide/" data-cta="docs" data-cta-location="footer"
+              <a :href="withBase('/guide/')" data-cta="docs" data-cta-location="footer"
                 >Quickstart</a
               >
               <a
-                href="/guide/standalone/"
+                :href="withBase('/guide/standalone/')"
                 data-cta="standalone"
                 data-cta-location="footer"
                 >Standalone</a
               >
               <a
-                href="/guide/widget.html"
+                :href="withBase('/guide/widget.html')"
                 data-cta="widget"
                 data-cta-location="footer"
                 >Widget</a
               >
               <a
-                href="/guide/demo.html"
+                :href="withBase('/guide/demo.html')"
                 data-cta="demo"
                 data-cta-location="footer"
                 >Demo</a
@@ -1441,17 +1442,17 @@ onBeforeUnmount(() => {
             </nav>
             <nav class="ft-col" aria-label="Compare">
               <span class="ft-col-title">Compare</span>
-              <a href="/guide/alternatives/recaptcha.html">vs reCAPTCHA</a>
-              <a href="/guide/alternatives/turnstile.html">vs Turnstile</a>
-              <a href="/guide/alternatives/hcaptcha.html">vs hCaptcha</a>
-              <a href="/guide/alternatives.html">All comparisons</a>
+              <a :href="withBase('/guide/alternatives/recaptcha.html')">vs reCAPTCHA</a>
+              <a :href="withBase('/guide/alternatives/turnstile.html')">vs Turnstile</a>
+              <a :href="withBase('/guide/alternatives/hcaptcha.html')">vs hCaptcha</a>
+              <a :href="withBase('/guide/alternatives.html')">All comparisons</a>
             </nav>
             <nav class="ft-col" aria-label="Learn">
               <span class="ft-col-title">Learn</span>
-              <a href="/guide/workings.html">How it works</a>
-              <a href="/guide/effectiveness.html">Effectiveness</a>
-              <a href="/guide/compliance.html">Compliance</a>
-              <a href="/guide/community.html">Community</a>
+              <a :href="withBase('/guide/workings.html')">How it works</a>
+              <a :href="withBase('/guide/effectiveness.html')">Effectiveness</a>
+              <a :href="withBase('/guide/compliance.html')">Compliance</a>
+              <a :href="withBase('/guide/community.html')">Community</a>
             </nav>
           </div>
         </div>
