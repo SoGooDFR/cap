@@ -96,6 +96,9 @@ function breadcrumbList(pageData) {
 
 // https://vitepress.dev/reference/site-config
 export default withMermaid({
+  // Served from a GitHub Pages project subpath (https://<owner>.github.io/cap/).
+  // Set to "/" if you deploy on a custom domain at the root.
+  base: "/cap/",
   lang: "en-US",
   title: "Cap – Open-source, self-hosted CAPTCHA alternative to reCAPTCHA",
   titleTemplate: ':title – Cap CAPTCHA',
@@ -206,16 +209,7 @@ export default withMermaid({
     [
       "script",
       {},
-      `window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init();
-      if (location.hostname === 'capjs.js.org') {
-        const pa = new URLSearchParams({
-          utm_source: 'capjs.js.org',
-          utm_medium: 'redirect',
-          utm_campaign: 'legacy-domain',
-        });
-        if (document.referrer) {pa.set('ref', document.referrer);}
-        location.replace(\`https://trycap.dev\${location.pathname}\${location.search ? location.search + '&' : '?'}\${pa}\${location.hash}\`);
-      }`
+      `window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init();`
     ],
     [
       "script",
@@ -376,7 +370,8 @@ export default withMermaid({
     },
   },
   sitemap: {
-    hostname: "https://trycap.dev",
+    // Adjust if your GitHub Pages URL differs (or a custom domain is used).
+    hostname: "https://sogoodfr.github.io/cap/",
     transformItems(items) {
       const excluded = [
         "guide/standalone.html",
