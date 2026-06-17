@@ -1,12 +1,15 @@
-name: Release image
+name: Release
 
-# Builds and pushes the standalone Docker image to GitHub Container Registry
-# (ghcr.io/<owner>/cap) on semver tags. Push a tag to release:
+# All-in-one release driven by Cap's own version. Pushing a semver tag builds
+# and publishes BOTH the Docker image and the Helm chart, versioned from the tag:
 #
-#   git tag v3.1.5 && git push origin v3.1.5
+#   git tag v3.1.6 && git push origin v3.1.6
 #
-# The image is tagged 3.1.5, 3.1, 3 and latest. Can also be run manually from
-# the Actions tab (workflow_dispatch), which builds but pushes only the ref tag.
+# Produces:
+#   ghcr.io/<owner>/cap:3.1.6  (+ 3.1, 3, latest)
+#   oci://ghcr.io/<owner>/charts/cap  version 3.1.6 (appVersion 3.1.6)
+#
+# workflow_dispatch builds everything but pushes nothing (dry run).
 
 on:
   push:
@@ -18,7 +21,7 @@ env:
   IMAGE: ghcr.io/${{ github.repository_owner }}/cap
 
 jobs:
-  build:
+  image:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -62,3 +65,49 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  chart:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+
+      - name: Resolve version from tag
+        id: ver
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            v=$(grep '^version:' deploy/helm/cap/Chart.yaml | awk '{print $2}')
+            echo "push=false" >> "$GITHUB_OUTPUT"
+          else
+            v="${GITHUB_REF_NAME#v}"
+            echo "push=true" >> "$GITHUB_OUTPUT"
+          fi
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+          echo "Chart/app version: $v"
+
+      - name: Lint
+        run: helm lint deploy/helm/cap --set secrets.adminKey=lintplaceholder
+
+      - name: Package
+        run: |
+          helm package deploy/helm/cap \
+            --version "${{ steps.ver.outputs.version }}" \
+            --app-version "${{ steps.ver.outputs.version }}" \
+            --destination /tmp/chart
+
+      - name: Log in to GHCR
+        if: steps.ver.outputs.push == 'true'
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push chart
+        if: steps.ver.outputs.push == 'true'
+        run: |
+          owner_lc=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          chart_tgz=$(ls /tmp/chart/cap-*.tgz)
+          echo "Pushing $chart_tgz to oci://ghcr.io/$owner_lc/charts"
+          helm push "$chart_tgz" "oci://ghcr.io/$owner_lc/charts"

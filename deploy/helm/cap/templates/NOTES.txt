@@ -1,0 +1,32 @@
+Cap standalone has been deployed.
+
+Release: {{ .Release.Name }}
+Namespace: {{ .Release.Namespace }}
+Image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+Replicas: {{ if .Values.autoscaling.enabled }}autoscaled {{ .Values.autoscaling.minReplicas }}-{{ .Values.autoscaling.maxReplicas }}{{ else }}{{ .Values.replicaCount }}{{ end }}
+
+{{- if .Values.ingress.enabled }}
+
+Reachable via Ingress:
+{{- range .Values.ingress.hosts }}
+  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .host }}
+{{- end }}
+{{- else if .Values.gateway.enabled }}
+
+Reachable via Gateway API HTTPRoute:
+{{- range .Values.gateway.hostnames }}
+  https://{{ . }}
+{{- end }}
+{{- else }}
+
+No Ingress or Gateway enabled. Port-forward to test:
+  kubectl -n {{ .Release.Namespace }} port-forward svc/{{ include "cap.fullname" . }} 8080:{{ .Values.service.port }}
+  open http://localhost:8080
+{{- end }}
+
+Redis target: {{ if .Values.secrets.existingSecret }}(from existing secret {{ .Values.secrets.existingSecret }}){{ else }}{{ .Values.secrets.redisUrl }}{{ end }}
+{{- if eq (.Values.config.REDIS_CLUSTER | toString) "true" }}
+Cluster mode: enabled
+{{- end }}
+
+Log in to the dashboard with the configured ADMIN_KEY.

@@ -1,0 +1,19 @@
+apiVersion: v2
+name: cap
+description: Cap - open-source, self-hosted proof-of-work CAPTCHA alternative (standalone server)
+type: application
+# version and appVersion are overridden by the release workflow from the git
+# tag (AIO: chart version == app version == Cap version). These are fallbacks
+# for local `helm package` / `helm install ./deploy/helm/cap`.
+version: 3.1.5
+appVersion: "3.1.5"
+home: https://github.com/SoGooDFR/cap
+sources:
+  - https://github.com/SoGooDFR/cap
+keywords:
+  - captcha
+  - proof-of-work
+  - anti-bot
+  - security
+maintainers:
+  - name: SoGooDFR
