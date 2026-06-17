@@ -37,13 +37,33 @@ config:
   # Comma-separated allowed CORS origins.
   CORS_ORIGIN: ""
   # Header to read the client IP from (behind a proxy/LB), e.g. X-Forwarded-For.
+  # Behind Cloudflare, use the real client IP instead:
+  #   RATELIMIT_IP_HEADER: "CF-Connecting-IP"
   RATELIMIT_IP_HEADER: "X-Forwarded-For"
   HIDE_RATELIMIT_IP_WARNING: ""
   DISABLE_ERROR_LOGGING: ""
   SHOW_ERRORS: ""
   DEMO_MODE: ""
-  ENABLE_ASSETS_SERVER: ""
   RSW_BITS: ""
+  # Asset server: serve the widget + wasm from this server instead of a CDN.
+  # When enabled, pin WIDGET_VERSION and WASM_VERSION ("latest" warns in prod).
+  ENABLE_ASSETS_SERVER: ""
+  WIDGET_VERSION: ""
+  WASM_VERSION: ""
+  # Source CDN/mirror the assets are fetched from (default cdn.jsdelivr.net).
+  CACHE_HOST: ""
+
+# -- Air-gapped widget/wasm serving (NO runtime egress).
+# When enabled: the chart turns on the asset server and a post-install/upgrade
+# hook Job seeds the image-baked assets into Redis. The widget/wasm versions
+# MUST match the WIDGET_VERSION/WASM_VERSION build args baked into the image.
+# Leave config.ENABLE_ASSETS_SERVER empty when using this (it is set here).
+assets:
+  airgap:
+    enabled: false
+    widgetVersion: "0.1.56"
+    wasmVersion: "0.0.7"
+    bundleDir: /usr/src/app/asset-bundle
 
 # -- Extra raw env entries (list of {name,value} or valueFrom).
 extraEnv: []

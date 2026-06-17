@@ -75,6 +75,43 @@ gateway:
     - cap.example.com
 ```
 
+## Self-hosting the widget assets
+
+By default clients load the widget/wasm from a CDN. To serve them from this
+server instead, enable the asset server and pin the versions (`latest` warns in
+production). The assets are fetched once from `CACHE_HOST` and cached in Redis.
+
+```yaml
+config:
+  ENABLE_ASSETS_SERVER: "true"
+  WIDGET_VERSION: "0.1.53"      # pin to a published @cap.js/widget version
+  WASM_VERSION: "0.0.7"         # pin to a published @cap.js/wasm version
+  # CACHE_HOST: "https://cdn.jsdelivr.net"  # override for an internal mirror
+```
+
+Requires outbound access to `CACHE_HOST` at startup/refresh.
+
+### Air-gapped (no runtime egress)
+
+For a fully self-contained deployment, the widget/wasm are baked into the image
+at build time and seeded into Redis by a post-install/upgrade hook Job, so the
+server never reaches out at runtime:
+
+```yaml
+assets:
+  airgap:
+    enabled: true
+    widgetVersion: "0.1.56"   # must match the image's WIDGET_VERSION build arg
+    wasmVersion: "0.0.7"      # must match the image's WASM_VERSION build arg
+```
+
+This automatically sets `ENABLE_ASSETS_SERVER=true` and the versions (leave
+`config.ENABLE_ASSETS_SERVER` empty). The versions **must** match the
+`WIDGET_VERSION` / `WASM_VERSION` Docker build args used to build the image.
+
+Note: GeoIP (db-ip/maxmind) is a separate runtime egress; keep it disabled for a
+true air-gap, or supply the `.mmdb` files by other means.
+
 ## Key parameters
 
 | Key | Default | Description |

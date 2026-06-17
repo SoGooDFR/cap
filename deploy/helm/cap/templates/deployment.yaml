@@ -61,6 +61,14 @@ spec:
               value: {{ $v | quote }}
             {{- end }}
             {{- end }}
+            {{- if .Values.assets.airgap.enabled }}
+            - name: ENABLE_ASSETS_SERVER
+              value: "true"
+            - name: WIDGET_VERSION
+              value: {{ .Values.assets.airgap.widgetVersion | quote }}
+            - name: WASM_VERSION
+              value: {{ .Values.assets.airgap.wasmVersion | quote }}
+            {{- end }}
             {{- with .Values.extraEnv }}
             {{- toYaml . | nindent 12 }}
             {{- end }}

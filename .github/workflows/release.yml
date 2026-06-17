@@ -19,6 +19,10 @@ on:
 
 env:
   IMAGE: ghcr.io/${{ github.repository_owner }}/cap
+  # Widget/wasm versions baked into the image (air-gap asset serving).
+  # Keep in sync with assets.airgap.{widgetVersion,wasmVersion} in the Helm chart.
+  WIDGET_VERSION: "0.1.56"
+  WASM_VERSION: "0.0.7"
 
 jobs:
   image:
@@ -61,6 +65,9 @@ jobs:
           file: standalone/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'workflow_dispatch' }}
+          build-args: |
+            WIDGET_VERSION=${{ env.WIDGET_VERSION }}
+            WASM_VERSION=${{ env.WASM_VERSION }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
